@@ -45,6 +45,28 @@ class Particle{
         steer.limit(this.maxforce);
         return steer;
     }
+
+    flee_after_arrive(target){
+        let d1 = p5.Vector.sub(target, this.pos);
+        let d = d1.mag();
+        if(d<50){
+            d1.setMag(this.maxspeed);
+            d1.mult(-1);
+            let steer = p5.Vector.sub(d1, this.vel);
+            steer.limit(this.maxforce);
+            return steer;
+        }
+        let desired = p5.Vector.sub(target, this.pos);
+        d2 = desired.mag();
+        speed = this.maxspeed;
+        if(d2 < 200){
+            speed = map(d, 0,100,0, this.maxspeed);
+        }
+        desired.setMag(speed);
+        let steer = p5.Vector.sub(desired, this.vel);
+        steer.limit(this.maxforce);
+        return steer;
+    }
     
     
     flee(target){
